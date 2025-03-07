@@ -35,6 +35,7 @@ export async function PUT(req: NextRequest) {
 
         return NextResponse.json({ message: "contact has been updated", updatedContact })
     } catch (err) {
+        console.log(err)
         return NextResponse.json({ message: "failed to update a contact", err })
     }
 }
