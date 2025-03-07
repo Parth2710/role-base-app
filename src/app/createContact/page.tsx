@@ -29,6 +29,7 @@ const CreateContact = () => {
                 setError(contactRes.message)
             }
         } catch (err) {
+            console.log(err)
             setError("internal server issue")
         }
     }

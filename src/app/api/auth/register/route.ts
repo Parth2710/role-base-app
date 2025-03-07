@@ -40,6 +40,6 @@ export async function POST(req: NextRequest) {
 
         return NextResponse.json({ success: true, message: "registration has been completed successfully", newUser, userId: newUser.id })
     } catch (err) {
-        return NextResponse.json({ success: false, message: "registration failed" })
+        return NextResponse.json({ success: false, message: "registration failed", err })
     }
 }

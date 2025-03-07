@@ -23,6 +23,6 @@ export async function POST(req: NextRequest) {
         })
         return NextResponse.json({ message: "contact has been created", newContact })
     } catch (err) {
-        return NextResponse.json({ message: "failed to create a contact" })
+        return NextResponse.json({ message: "failed to create a contact", err })
     }
 }

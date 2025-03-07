@@ -32,6 +32,6 @@ export async function DELETE(req: NextRequest) {
 
         return NextResponse.json({ message: "contact has been deleted", deletedContact })
     } catch (err) {
-        return NextResponse.json({ message: "failed to delete a contact" })
+        return NextResponse.json({ message: "failed to delete a contact", err })
     }
 }

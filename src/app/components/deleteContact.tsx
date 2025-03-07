@@ -28,6 +28,7 @@ const DeleteContact: React.FC<DeleteType> = ({ id }) => {
             }
             router.refresh()
         } catch (err) {
+            console.log(err)
             alert("internal server issue")
         }
     }

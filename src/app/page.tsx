@@ -86,7 +86,7 @@ export default function Home() {
             </button>
           </form>
           <p className="mt-4 text-sm text-center text-gray-600">
-            Don't have an account?{" "}
+            Do not have an account?{" "}
             <a
               href="/register"
               className="text-indigo-600 hover:underline font-medium"
