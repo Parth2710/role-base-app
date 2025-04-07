@@ -1,0 +1,47 @@
+version: 1
+jobs:
+  - name: Build and Push Docker Image
+    steps:
+      - name: Checkout
+        checkout: true
+ 
+      - name: Set up Docker
+        run: |
+          apk add --no-cache docker-cli
+          dockerd &
+          sleep 5
+ 
+      - name: Build Docker Image
+        run: docker build -t parth2k2/rollbase-app-web:$ONDEV_COMMIT .
+ 
+      - name: Login to Docker Hub
+        run: echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin
+ 
+      - name: Push to Docker Hub
+        run: docker push parth2k2/rollbase-app-web:$ONDEV_COMMIT
+ 
+    services:
+      - name: docker
+        image: docker:dind
+        privileged: true
+ 
+    caches:
+      - key: npm-cache
+        path: ~/.npm
+          
+  - name: Deploy to Kubernetes
+    dependencies: [Build and Push Docker Image]
+    steps:
+      - name: Set up kubectl
+        run: |
+          apk add --no-cache curl bash
+          curl -LO https://dl.k8s.io/release/v1.27.0/bin/linux/amd64/kubectl
+          chmod +x kubectl && mv kubectl /usr/local/bin/
+ 
+      - name: Apply Kubernetes manifests
+        run: |
+          echo "$KUBECONFIG_CONTENT" > kubeconfig
+          export KUBECONFIG=$(pwd)/kubeconfig
+          kubectl apply -f k8s/
+ 
+    caches: []        
