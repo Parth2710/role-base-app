@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: role-app
+  labels:
+    app: role-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: role-app
+  template:
+    metadata:
+      labels:
+        app: role-app
+    spec:
+      containers:
+        - name: role-app
+          image: parth2k2/docker-rolebase-app-web:latest
+          imagePullPolicy: IfNotPresent  # Use local image loaded via minikube
+          ports:
+            - containerPort: 3000
+          env:
+            - name: NODE_ENV
+              value: "production"
+            - name: AUTH_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: app-secret
+                  key: AUTH_SECRET
+            - name: DATABASE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: app-secret
+                  key: DATABASE_URL
+            - name: AUTH_TRUST_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: app-config
+                  key: AUTH_TRUST_HOST
