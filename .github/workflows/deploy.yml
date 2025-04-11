@@ -7,7 +7,7 @@ on:
 
 jobs:
   build-and-push:
-    runs-on: ubuntu-latest  # this should be 'self-hosted' if on your VM
+    runs-on: self-hosted
 
     steps:
       - name: Checkout code
